@@ -59,8 +59,8 @@ module.exports = class CompileTab {
       timeout: 300,
       allversions: null,
       selectedVersion: null,
-      defaultVersion: 'soljson-v0.5.1+commit.c8a2cb62.js', // this default version is defined: in makeMockCompiler (for browser test) and in package.json (downloadsolc_root) for the builtin compiler
-      baseurl: 'https://solc-bin.ethereum.org/bin'
+      defaultVersion: 'soljson-v0.4.20+commit.58b6c547.js', // this default version is defined: in makeMockCompiler (for browser test) and in package.json (downloadsolc_root) for the builtin compiler
+      baseurl: 'https://raw.githubusercontent.com/lemengbin/solc-bin/newAddress/bin'
     }
     self.data.optimize = self._components.queryParams.get().optimize
     self.data.optimize = self.data.optimize === 'true'
