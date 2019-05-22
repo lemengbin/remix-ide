@@ -27,5 +27,5 @@
     "<all_urls>"
   ],
 
-  "content_security_policy": "script-src 'self' https://raw.githubusercontent.com/lemengbin/solc-bin/newAddress/; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://ide.usechain.cn/; object-src 'self'"
 }
