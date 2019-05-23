@@ -7,6 +7,7 @@ var helper = require('./lib/helper')
 var copyToClipboard = require('./app/ui/copy-to-clipboard')
 var css = require('./universal-dapp-styles')
 var MultiParamManager = require('./multiParamManager')
+var base58 = require('./base58')
 
 function UniversalDAppUI (udapp, opts = {}) {
   this.udapp = udapp
@@ -32,10 +33,11 @@ UniversalDAppUI.prototype.renderInstanceFromABI = function (contractABI, address
   var context = self.udapp.context()
 
   var shortAddress = helper.shortenAddress(address)
+  var umAddress = base58.HexAddressToUmAddress(address)
   var title = yo`
     <div class="${css.title}" onclick=${toggleClass}>
     <div class="${css.titleText}"> ${contractName} at ${shortAddress} (${context}) </div>
-    ${copyToClipboard(() => address)}
+    ${copyToClipboard(() => umAddress)}
   </div>`
 
   if (self.udapp.removable_instances) {

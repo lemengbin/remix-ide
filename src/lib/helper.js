@@ -1,9 +1,11 @@
 var async = require('async')
+var base58 = require('../base58')
 
 module.exports = {
   shortenAddress: function (address, etherBalance) {
-    var len = address.length
-    return address.slice(0, 5) + '...' + address.slice(len - 5, len) + (etherBalance ? ' (' + etherBalance.toString() + ' use)' : '')
+    var umAddress = base58.HexAddressToUmAddress(address)
+    var len = umAddress.length
+    return umAddress.slice(0, 5) + '...' + umAddress.slice(len - 5, len) + (etherBalance ? ' (' + etherBalance.toString() + ' use)' : '')
   },
   shortenHexData: function (data) {
     if (!data) return ''

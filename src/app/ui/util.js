@@ -3,6 +3,7 @@ var ethJSUtil = require('ethereumjs-util')
 var BN = ethJSUtil.BN
 var remixLib = require('remix-lib')
 var txFormat = remixLib.execution.txFormat
+var base58 = require('../../base58')
 
 module.exports = {
   decodeResponseToTreeView: function (response, fnabi) {
@@ -18,6 +19,22 @@ module.exports = {
         return ret
       }
     })
-    return treeView.render(txFormat.decodeResponse(response, fnabi))
+    var json = txFormat.decodeResponse(response, fnabi)
+    for (var key in json) {
+      var value = json[key]
+      var arr = value.split(' ')
+      if (arr[0] === 'address:') {
+        var index = arr.length - 1
+        var umAddress = base58.HexAddressToUmAddress(arr[index])
+        var newValue = ''
+        if (index === 1) {
+          newValue = arr[0] + ' ' + umAddress
+        } else if (index === 2) {
+          newValue = arr[0] + ' ' + arr[1] + ' ' + umAddress
+        }
+        json[key] = newValue
+      }
+    }
+    return treeView.render(json)
   }
 }

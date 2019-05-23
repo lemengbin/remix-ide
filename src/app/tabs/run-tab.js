@@ -23,6 +23,7 @@ var MultiParamManager = require('../../multiParamManager')
 var modalDialog = require('../ui/modaldialog')
 var CompilerAbstract = require('../compiler/compiler-abstract')
 var tootip = require('../ui/tooltip')
+var base58 = require('../../base58')
 
 function runTab (opts, localRegistry) {
   /* -------------------------
@@ -583,7 +584,9 @@ function settings (container, self) {
       </div>
       <div class=${css.account}>
         <select name="txorigin" class="${css.select}" id="txorigin"></select>
-        ${copyToClipboard(() => document.querySelector('#runTabView #txorigin').value)}
+        ${copyToClipboard(() => {
+          return base58.HexAddressToUmAddress(document.querySelector('#runTabView #txorigin').value)
+        })}
         <i class="fa fa-pencil-square-o ${css.icon}" aria-hiden="true" onclick=${signMessage} title="Sign a message using this account key"></i>
       </div>
     </div>
