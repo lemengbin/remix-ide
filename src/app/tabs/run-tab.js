@@ -50,15 +50,15 @@ function runTab (opts, localRegistry) {
         var select = document.getElementById('unit')
         var index = select.selectedIndex
         var selectedUnit = select.querySelectorAll('option')[index].dataset.unit
-        var unit = 'use' // default
+        var unit = 'ether' // default
         if (selectedUnit === 'use') {
-          unit = 'use'
+          unit = 'ether'
         } else if (selectedUnit === 'finney') {
           unit = 'finney'
         } else if (selectedUnit === 'ghui') {
-          unit = 'ghui'
+          unit = 'gwei'
         } else if (selectedUnit === 'hui') {
-          unit = 'hui'
+          unit = 'wei'
         }
         cb(null, executionContext.web3().toWei(number, unit))
       } catch (e) {
