@@ -31,10 +31,10 @@ function confirmDialog (tx, amount, gasEstimation, self, newGasPriceCb, initialP
     <div class=${css.txInfoBox}>
       <div>From: ${tx.from}</div>
       <div>To: ${tx.to ? tx.to : '(Contract Creation)'}</div>
-      <div>Amount: ${amount} Ether</div>
+      <div>Amount: ${amount} Use</div>
       <div>Gas estimation: ${gasEstimation}</div>
       <div>Gas limit: ${tx.gas}</div>
-      <div>Gas price: <input id='gasprice' oninput=${onGasPriceChange} /> Gwei <span> (visit <a target='_blank' href='https://ethgasstation.info'>ethgasstation.info</a> to get more info about gas price)</span></div>
+      <div>Gas price: <input id='gasprice' oninput=${onGasPriceChange} /> Ghui <span> (visit <a target='_blank' href='https://ethgasstation.info'>ethgasstation.info</a> to get more info about gas price)</span></div>
       <div>Max transaction fee:<span id='txfee'></span></div>
       <div>Data:</div>
       <pre class=${css.wrapword}>${tx.data}</pre>

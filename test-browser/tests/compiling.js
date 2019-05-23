@@ -45,7 +45,7 @@ function testSimpleContract (browser, callback) {
       .click('#runTabView .instance div[class^="title"]')
       .testFunction('f - transact (not payable)',
         '0xa178c603400a184ce5fedbcfab392d9b77822f6ffa7facdec693aded214523bc',
-        `[vm]\nfrom:0xca3...a733c\nto:TestContract.f() 0x692...77b3a\nvalue:0 wei\ndata:0x261...21ff0\nlogs:0\nhash:0xa17...523bc`, null,
+        `[vm]\nfrom:0xca3...a733c\nto:TestContract.f() 0x692...77b3a\nvalue:0 hui\ndata:0x261...21ff0\nlogs:0\nhash:0xa17...523bc`, null,
         `{
  "0": "uint256: 8"
 }`)
@@ -57,7 +57,7 @@ function testSimpleContract (browser, callback) {
       })
       .testFunction('g - transact (not payable)',
         '0xb1532162e2e31397dc1e07ed0a1cf08f728e9b4487c6f9ed79d2f39410c92781',
-        `[vm]\nfrom:0xca3...a733c\nto:TestContract.g() 0x692...77b3a\nvalue:0 wei\ndata:0xe21...79b8e\nlogs:0\nhash:0xb15...92781`, null, `{
+        `[vm]\nfrom:0xca3...a733c\nto:TestContract.g() 0x692...77b3a\nvalue:0 hui\ndata:0xe21...79b8e\nlogs:0\nhash:0xb15...92781`, null, `{
  "0": "uint256: 345",
  "1": "string: comment_comment_",
  "2": "bool: true",
@@ -74,7 +74,7 @@ function testReturnValues (browser, callback) {
       .click('.instance:nth-of-type(2)')
       .testFunction('retunValues1 - transact (not payable)',
         '0xc3660c7ab6899f196e77d3ab3749169e22c00ae7f1b8fe3af0ce54df49504019',
-        `[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues1() 0x5e7...26e9f\nvalue:0 wei\ndata:0x9ed...59eb7\nlogs:0\nhash:0xc36...04019`,
+        `[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues1() 0x5e7...26e9f\nvalue:0 hui\ndata:0x9ed...59eb7\nlogs:0\nhash:0xc36...04019`,
         null,
         `{
  "0": "bool: _b true",
@@ -84,7 +84,7 @@ function testReturnValues (browser, callback) {
 }`)
       .testFunction('retunValues2 - transact (not payable)',
         '0xc8cc8150fcb0b09cdf51e7357341272118888fe8c4efe32881b56e891377aad9',
-        `[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues2() 0x5e7...26e9f\nvalue:0 wei\ndata:0xf57...4036c\nlogs:0\nhash:0xc8c...7aad9`, null, `{
+        `[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues2() 0x5e7...26e9f\nvalue:0 hui\ndata:0xf57...4036c\nlogs:0\nhash:0xc8c...7aad9`, null, `{
  "0": "bytes1: _b 0x12",
  "1": "bytes2: _b2 0x1223",
  "2": "bytes3: _b3 0x000000",
@@ -97,7 +97,7 @@ function testReturnValues (browser, callback) {
  "9": "bytes32: _b32 0x0325235325325235325235325235320000000000000000000000000000000000"
 }`).pause(500).testFunction('retunValues3 - transact (not payable)',
         '0x94c4b4324bad773dec29af3ffe26a698c32b5caf8a1eedf8889563158639d28a',
-        '[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues3() 0x5e7...26e9f\nvalue:0 wei\ndata:0x033...e0a7d\nlogs:0\nhash:0x94c...9d28a', null, `{
+        '[vm]\nfrom:0xca3...a733c\nto:testReturnValues.retunValues3() 0x5e7...26e9f\nvalue:0 hui\ndata:0x033...e0a7d\nlogs:0\nhash:0x94c...9d28a', null, `{
  "0": "uint8: _en 2",
  "1": "int256[5][]: _a1 1,-45,-78,56,60,-1,42,334,-45455,-446,1,10,-5435,45,-7"
 }`).click('i[class^="clearinstance"]').perform(() => { callback(null, browser) })
@@ -112,7 +112,7 @@ function testInputValues (browser, callback) {
         .click('.instance:nth-of-type(2)')
      .testFunction('inputValue1 - transact (not payable)',
         '0xf3265e3d9cd9299958bf81bed3cdfdd537942f85b9e0b95c5468c691d9396505',
-        `[vm]\nfrom:0xca3...a733c\nto:test.inputValue1(uint256,int256,string) 0x8c1...401f5\nvalue:0 wei\ndata:0xd69...00000\nlogs:0\nhash:0xf32...96505`,
+        `[vm]\nfrom:0xca3...a733c\nto:test.inputValue1(uint256,int256,string) 0x8c1...401f5\nvalue:0 hui\ndata:0xd69...00000\nlogs:0\nhash:0xf32...96505`,
         {types: 'uint256 _u, int256 _i, string _str', values: '"2343242", "-4324324", "string _ string _  string _  string _  string _  string _  string _  string _  string _  string _"'},
         `{
  "0": "uint256: _uret 2343242",
@@ -120,7 +120,7 @@ function testInputValues (browser, callback) {
  "2": "string: _strret string _ string _  string _  string _  string _  string _  string _  string _  string _  string _"
 }`).pause(500).testFunction('inputValue2 - transact (not payable)',
         '0xd9ec6d8aa73d81755447190f52939ee3084e105b988d445a11e7ac718392ff5a',
-        `[vm]\nfrom:0xca3...a733c\nto:test.inputValue2(uint256[3],bytes8[4]) 0x8c1...401f5\nvalue:0 wei\ndata:0x1b7...00000\nlogs:1\nhash:0xd9e...2ff5a`,
+        `[vm]\nfrom:0xca3...a733c\nto:test.inputValue2(uint256[3],bytes8[4]) 0x8c1...401f5\nvalue:0 hui\ndata:0x1b7...00000\nlogs:1\nhash:0xd9e...2ff5a`,
         {types: 'uint256[3] _n, bytes8[4] _b8', values: '[1,2,3], ["0x1234", "0x1234","0x1234","0x1234"]'},
         `{
  "0": "uint256[3]: _nret 1,2,3",

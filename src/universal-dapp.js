@@ -373,7 +373,7 @@ UniversalDApp.prototype.runTx = function (args, cb) {
               // removed, but for now keeping the original logic
               try {
                 var fee = executionContext.web3().toBigNumber(tx.gas).mul(executionContext.web3().toBigNumber(executionContext.web3().toWei(gasPrice.toString(10), 'gwei')))
-                txFeeText = ' ' + executionContext.web3().fromWei(fee.toString(10), 'ether') + ' Ether'
+                txFeeText = ' ' + executionContext.web3().fromWei(fee.toString(10), 'ether') + ' Use'
                 priceStatus = true
               } catch (e) {
                 txFeeText = ' Please fix this issue before sending any transaction. ' + e.message
