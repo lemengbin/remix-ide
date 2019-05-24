@@ -27,11 +27,10 @@ module.exports = {
         var index = arr.length - 1
         var umAddress = base58.HexAddressToUmAddress(arr[index])
         var newValue = ''
-        if (index === 1) {
-          newValue = arr[0] + ' ' + umAddress
-        } else if (index === 2) {
-          newValue = arr[0] + ' ' + arr[1] + ' ' + umAddress
+        for (var i = 0; i < index; i++) {
+          newValue += arr[i] + ' '
         }
+        newValue += umAddress
         json[key] = newValue
       }
     }

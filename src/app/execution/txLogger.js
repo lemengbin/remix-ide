@@ -390,6 +390,40 @@ function txDetails (e, tx, data, obj) {
   } else {
     log.removeChild(arrow)
     log.appendChild(arrowUp)
+
+    // handle input
+    var decodedInput = ' - '
+    if (data.resolvedData && data.resolvedData.params) {
+      var inputJson = typeConversion.stringify(data.resolvedData.params)
+      for (var inputKey in inputJson) {
+        var inputArr = inputKey.split(' ')
+        if (inputArr[0] === 'address') {
+          inputJson[inputKey] = base58.HexAddressToUmAddress(inputJson[inputKey])
+        }
+      }
+      decodedInput = JSON.stringify(inputJson, null, '\t')
+    }
+
+    // handle output
+    var decodedOutput = ' - '
+    if (data.resolvedData && data.resolvedData.decodedReturnValue) {
+      var outputJson = typeConversion.stringify(data.resolvedData.decodedReturnValue)
+      for (var outputKey in outputJson) {
+        var outputArr = outputJson[outputKey].split(' ')
+        if (outputArr[0] === 'address:') {
+          var index = outputArr.length - 1
+          var umAddress = base58.HexAddressToUmAddress(outputArr[index])
+          var newValue = ''
+          for (var i = 0; i < index; i++) {
+            newValue += outputArr[i] + ' '
+          }
+          newValue += umAddress
+          outputJson[outputKey] = newValue
+        }
+      }
+      decodedOutput = JSON.stringify(outputJson, null, '\t')
+    }
+
     table = createTable({
       hash: data.tx.hash,
       status: data.receipt ? data.receipt.status : null,
@@ -400,8 +434,8 @@ function txDetails (e, tx, data, obj) {
       to,
       gas: data.tx.gas,
       input: data.tx.input,
-      'decoded input': data.resolvedData && data.resolvedData.params ? JSON.stringify(typeConversion.stringify(data.resolvedData.params), null, '\t') : ' - ',
-      'decoded output': data.resolvedData && data.resolvedData.decodedReturnValue ? JSON.stringify(typeConversion.stringify(data.resolvedData.decodedReturnValue), null, '\t') : ' - ',
+      'decoded input': decodedInput,
+      'decoded output': decodedOutput,
       logs: data.logs,
       val: data.tx.value,
       transactionCost: data.tx.transactionCost,
