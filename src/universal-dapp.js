@@ -210,53 +210,55 @@ UniversalDApp.prototype.call = function (isUserAction, args, value, lookupOnly, 
       logMsg = `call to ${args.contractName}.${(args.funABI.name) ? args.funABI.name : '(fallback)'}`
     }
   }
-  var params = ''
-  try {
-    value = value.replace(/(^|,\s+|,)(\d+)(\s+,|,|$)/g, '$1"$2"$3') // replace non quoted number by quoted number
-    value = value.replace(/(^|,\s+|,)(0[xX][0-9a-fA-F]+)(\s+,|,|$)/g, '$1"$2"$3') // replace non quoted hex string by quoted hex string
-    params = JSON.parse('[' + value + ']')
-  } catch (e) {
-    self._deps.logCallback(`${logMsg} errored: Error encoding arguments: ${value} `)
-    return
-  }
-  if (params.length !== args.funABI.inputs.length) {
-    self._deps.logCallback(`${logMsg} errored: Invalid arguments: ${value} `)
-    return
-  }
-  var i = 0
-  if (args.funABI.inputs && args.funABI.inputs.length > 0) {
-    for (i = 0; i < args.funABI.inputs.length; i++) {
-      var inputType = args.funABI.inputs[i].type
-      if (inputType === 'address') {
-        var umAddress = params[i]
-        if ((/^(Um)?[1-9a-z]{33}$/i.test(umAddress)) && (/[^OIl]{1}/.test(umAddress))) {
-          params[i] = base58.UmAddressToHexAddress(umAddress)
-        } else {
-          self._deps.logCallback(`${logMsg} errored: Error encoding arguments: invalid address (${umAddress} `)
-          return
+  if (value) {
+    var params = ''
+    try {
+      value = value.replace(/(^|,\s+|,)(\d+)(\s+,|,|$)/g, '$1"$2"$3') // replace non quoted number by quoted number
+      value = value.replace(/(^|,\s+|,)(0[xX][0-9a-fA-F]+)(\s+,|,|$)/g, '$1"$2"$3') // replace non quoted hex string by quoted hex string
+      params = JSON.parse('[' + value + ']')
+    } catch (e) {
+      self._deps.logCallback(`${logMsg} errored: Error encoding arguments: [${value}]`)
+      return
+    }
+    if (params.length !== args.funABI.inputs.length) {
+      self._deps.logCallback(`${logMsg} errored: Please input corrent arguments: ${value}`)
+      return
+    }
+    var i = 0
+    if (args.funABI.inputs && args.funABI.inputs.length > 0) {
+      for (i = 0; i < args.funABI.inputs.length; i++) {
+        var inputType = args.funABI.inputs[i].type
+        if (inputType === 'address') {
+          var umAddress = params[i]
+          if ((/^(Um)?[1-9a-z]{33}$/i.test(umAddress)) && (!/[OIl]{1}/.test(umAddress))) {
+            params[i] = base58.UmAddressToHexAddress(umAddress)
+          } else {
+            self._deps.logCallback(`${logMsg} errored: Error encoding arguments: invalid Um address: ${umAddress}`)
+            return
+          }
         }
       }
     }
-  }
-  value = ''
-  for (i = 0; i < params.length - 1; i++) {
-    if (typeof params[i] === 'string') {
-      value += '"' + params[i] + '", '
-    } else {
-      value += params[i] + ', '
+    value = ''
+    for (i = 0; i < params.length - 1; i++) {
+      if (typeof params[i] === 'string') {
+        value += '"' + params[i] + '", '
+      } else {
+        value += params[i] + ', '
+      }
     }
-  }
-  if (typeof params[i] === 'string') {
-    value += '"' + params[i] + '"'
-  } else {
-    value += params[i]
+    if (typeof params[i] === 'string') {
+      value += '"' + params[i] + '"'
+    } else {
+      value += params[i]
+    }
   }
   // contractsDetails is used to resolve libraries
   txFormat.buildData(args.contractName, args.contractAbi, self.data.contractsDetails, false, args.funABI, args.funABI.type !== 'fallback' ? value : '', (error, data) => {
     if (!error) {
       if (isUserAction) {
         if (!args.funABI.constant) {
-          self._deps.logCallback(`${logMsg} pending ... `)
+          self._deps.logCallback(`${logMsg} pending ...`)
         } else {
           self._deps.logCallback(`${logMsg}`)
         }
@@ -268,7 +270,7 @@ UniversalDApp.prototype.call = function (isUserAction, args, value, lookupOnly, 
           if (isVM) {
             var vmError = txExecution.checkVMError(txResult)
             if (vmError.error) {
-              self._deps.logCallback(`${logMsg} errored: ${vmError.message} `)
+              self._deps.logCallback(`${logMsg} errored: ${vmError.message}`)
               return
             }
           }
@@ -277,11 +279,11 @@ UniversalDApp.prototype.call = function (isUserAction, args, value, lookupOnly, 
             outputCb(decoded)
           }
         } else {
-          self._deps.logCallback(`${logMsg} errored: ${error} `)
+          self._deps.logCallback(`${logMsg} errored: ${error}`)
         }
       })
     } else {
-      self._deps.logCallback(`${logMsg} errored: ${error} `)
+      self._deps.logCallback(`${logMsg} errored: ${error}`)
     }
   }, (msg) => {
     self._deps.logCallback(msg)
