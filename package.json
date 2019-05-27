@@ -41,7 +41,7 @@
     "remix-analyzer": "0.2.13-jsvm2.5.0-2",
     "remix-lib": "0.3.13-jsvm2.5.0-2",
     "remix-solidity": "0.2.14-jsvm2.5.0-2",
-    "remix-tests": "0.0.21-jsvm2.5.0-4",
+    "remix-tests": "git+https://github.com/lemengbin/remix-tests.git",
     "remixd": "git+https://github.com/ethereum/remixd.git",
     "request": "^2.83.0",
     "rimraf": "^2.6.1",
