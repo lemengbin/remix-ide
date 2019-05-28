@@ -387,6 +387,36 @@ function txDetails (e, tx, data, obj) {
     log.removeChild(arrow)
     log.appendChild(arrowDown)
   } else {
+    var decodedInput = ' - '
+    if (data.resolvedData && data.resolvedData.params) {
+      var inputJson = typeConversion.stringify(data.resolvedData.params)
+      for (var iKey in inputJson) {
+        var iArr = iKey.split(' ')
+        if (iArr[0] === 'address') {
+          inputJson[iKey] = base58.HexAddressToUmAddress(inputJson[iKey])
+        }
+      }
+      decodedInput = JSON.stringify(inputJson, null, '\t')
+    }
+
+    var decodedOutput = ' - '
+    if (data.resolvedData && data.resolvedData.decodedReturnValue) {
+      var outputJson = typeConversion.stringify(data.resolvedData.decodedReturnValue)
+      for (var oKey in outputJson) {
+        var oArr = outputJson[oKey].split(' ')
+        if (oArr[0] === 'address:') {
+          var value = ''
+          var i
+          for (i = 0; i < oArr.length - 1; i++) {
+            value += oArr[i] + ' '
+          }
+          value += base58.HexAddressToUmAddress(oArr[i])
+          outputJson[oKey] = value
+        }
+      }
+      decodedOutput = JSON.stringify(outputJson, null, '\t')
+    }
+
     log.removeChild(arrow)
     log.appendChild(arrowUp)
     table = createTable({
@@ -399,8 +429,8 @@ function txDetails (e, tx, data, obj) {
       to,
       gas: data.tx.gas,
       input: data.tx.input,
-      'decoded input': data.resolvedData && data.resolvedData.params ? JSON.stringify(typeConversion.stringify(data.resolvedData.params), null, '\t') : ' - ',
-      'decoded output': data.resolvedData && data.resolvedData.decodedReturnValue ? JSON.stringify(typeConversion.stringify(data.resolvedData.decodedReturnValue), null, '\t') : ' - ',
+      'decoded input': decodedInput,
+      'decoded output': decodedOutput,
       logs: data.logs,
       val: data.tx.value,
       transactionCost: data.tx.transactionCost,
