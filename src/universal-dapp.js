@@ -20,6 +20,7 @@ var globalRegistry = require('./global/registry')
 var modalDialog = require('./app/ui/modaldialog')
 var typeConversion = remixLib.execution.typeConversion
 var confirmDialog = require('./app/execution/confirmDialog')
+var base58 = require('./base58')
 
 function UniversalDApp (opts, localRegistry) {
   this.event = new EventManager()
@@ -116,7 +117,7 @@ UniversalDApp.prototype._addAccount = function (privateKey, balance) {
 
   if (self.accounts) {
     privateKey = Buffer.from(privateKey, 'hex')
-    var address = ethJSUtil.privateToAddress(privateKey)
+    var address = base58.HexAddressToUmAddress(ethJSUtil.privateToAddress(privateKey).toString('hex'))
 
     // FIXME: we don't care about the callback, but we should still make this proper
     let stateManager = executionContext.vm().stateManager
@@ -128,7 +129,7 @@ UniversalDApp.prototype._addAccount = function (privateKey, balance) {
       })
     })
 
-    self.accounts['0x' + address.toString('hex')] = { privateKey: privateKey, nonce: 0 }
+    self.accounts[address] = { privateKey: privateKey, nonce: 0 }
   }
 }
 
@@ -155,8 +156,6 @@ UniversalDApp.prototype.getAccounts = function (cb) {
 UniversalDApp.prototype.getBalance = function (address, cb) {
   var self = this
 
-  address = ethJSUtil.stripHexPrefix(address)
-
   if (!executionContext.isVM()) {
     executionContext.web3().eth.getBalance(address, function (err, res) {
       if (err) {
@@ -170,7 +169,7 @@ UniversalDApp.prototype.getBalance = function (address, cb) {
       return cb('No accounts?')
     }
 
-    executionContext.vm().stateManager.getAccount(Buffer.from(address, 'hex'), function (err, res) {
+    executionContext.vm().stateManager.getAccount(address, function (err, res) {
       if (err) {
         cb('Account not found')
       } else {
