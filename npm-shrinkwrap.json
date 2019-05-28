@@ -9766,9 +9766,7 @@
       }
     },
     "remix-tests": {
-      "version": "0.0.21-jsvm2.5.0-4",
-      "resolved": "https://registry.npmjs.org/remix-tests/-/remix-tests-0.0.21-jsvm2.5.0-4.tgz",
-      "integrity": "sha512-Xbwr3/KWbhSO0AK17/J2VvFE7DQ+eXLXIfH37bJ9ctY/jfHW5L37NbpjHEIQRszDwqG9WwPX2waG+VQLOBAJug==",
+      "version": "git+https://github.com/lemengbin/remix-tests.git#989c418a91962fed15d3bd1a94a2ceb788a27f97",
       "dev": true,
       "requires": {
         "async": "2.6.2",
