@@ -14,6 +14,7 @@ var executionContext = require('../../execution-context')
 var modalDialog = require('../ui/modal-dialog-custom')
 var typeConversion = remixLib.execution.typeConversion
 var globlalRegistry = require('../../global/registry')
+var base58 = require('../../base58')
 
 var css = csjs`
   .log {
@@ -318,9 +319,9 @@ function checkTxStatus (tx, type) {
 
 function context (self, opts) {
   var data = opts.data || ''
-  var from = opts.from ? helper.shortenHexData(opts.from) : ''
+  var from = opts.from ? helper.shortenAddress(opts.from) : ''
   var to = opts.to
-  if (data.tx.to) to = to + ' ' + helper.shortenHexData(data.tx.to)
+  if (data.tx.to) to = to + ' ' + helper.shortenAddress(data.tx.to)
   var val = data.tx.value
   var hash = data.tx.hash ? helper.shortenHexData(data.tx.hash) : ''
   var input = data.tx.input ? helper.shortenHexData(data.tx.input) : ''
@@ -355,7 +356,7 @@ function context (self, opts) {
         </span>
       </div>`
   } else {
-    to = helper.shortenHexData(to)
+    to = helper.shortenAddress(to)
     hash = helper.shortenHexData(data.tx.blockHash)
     return yo`
       <div>
@@ -439,21 +440,23 @@ function createTable (opts) {
   `
   table.appendChild(transactionHash)
 
+  var umContractAddress = opts.contractAddress ? base58.HexAddressToUmAddress(opts.contractAddress) : ' - '
   var contractAddress = yo`
     <tr class="${css.tr}">
       <td class="${css.td}"> contract address </td>
-      <td class="${css.td}">${opts.contractAddress}
-        ${copyToClipboard(() => opts.contractAddress)}
+      <td class="${css.td}">${umContractAddress}
+        ${copyToClipboard(() => umContractAddress)}
       </td>
     </tr>
   `
   if (opts.contractAddress) table.appendChild(contractAddress)
 
+  var umFrom = opts.from ? base58.HexAddressToUmAddress(opts.from) : ' - '
   var from = yo`
     <tr class="${css.tr}">
       <td class="${css.td} ${css.tableTitle}"> from </td>
-      <td class="${css.td}">${opts.from}
-        ${copyToClipboard(() => opts.from)}
+      <td class="${css.td}">${umFrom}
+        ${copyToClipboard(() => umFrom)}
       </td>
     </tr>
   `
@@ -461,8 +464,9 @@ function createTable (opts) {
 
   var toHash
   var data = opts.data  // opts.data = data.tx
+  var umTo = data.to ? base58.HexAddressToUmAddress(data.to) : ''
   if (data.to) {
-    toHash = opts.to + ' ' + data.to
+    toHash = opts.to + ' ' + umTo
   } else {
     toHash = opts.to
   }
@@ -470,7 +474,7 @@ function createTable (opts) {
     <tr class="${css.tr}">
     <td class="${css.td}"> to </td>
     <td class="${css.td}">${toHash}
-      ${copyToClipboard(() => data.to ? data.to : toHash)}
+      ${copyToClipboard(() => data.to ? umTo : toHash)}
     </td>
     </tr>
   `

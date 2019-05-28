@@ -108,6 +108,9 @@ var StringToBytes = function (str) {
 }
 
 var HexAddressToUmAddress = function (value) {
+  if ((/^(Um)?[1-9a-z]{33}$/i.test(value)) && (!/[OIl]{1}/.test(value))) {
+    return value
+  }
   var buff = '0FA2' + value.slice(value.length - 40, value.length)
   var hash1 = CryptoJS.SHA256(CryptoJS.enc.Hex.parse(buff))
   var hash2 = CryptoJS.SHA256(hash1).toString()
@@ -115,6 +118,12 @@ var HexAddressToUmAddress = function (value) {
 }
 
 var UmAddressToHexAddress = function (value) {
+  if (/^(0x)?[0-9a-f]{40}$/i.test(value)) {
+    return value
+  }
+  if (/^[0-9a-f]{40}$/i.test(value)) {
+    return '0x' + value
+  }
   return '0x' + BytesToString(Base58Decode(value).slice(2, 22))
 }
 
