@@ -487,11 +487,8 @@ function contractDropdown (events, self) {
     var noInstancesText = self._view.noInstancesText
     if (noInstancesText.parentNode) { noInstancesText.parentNode.removeChild(noInstancesText) }
     var address = atAddressButtonInput.value
-    if (!ethJSUtil.isValidAddress(address)) {
+    if (!/^(Um)?[1-9a-z]{33}$/i.test(address) || /[OIl]{1}/.test(address)) {
       return modalDialogCustom.alert('Invalid address.')
-    }
-    if (/[a-f]/.test(address) && /[A-F]/.test(address) && !ethJSUtil.isValidChecksumAddress(address)) {
-      return modalDialogCustom.alert('Invalid checksum address.')
     }
     if (/.(.abi)$/.exec(self._deps.config.get('currentFile'))) {
       modalDialogCustom.confirm(null, 'Do you really want to interact with ' + address + ' using the current ABI definition ?', () => {

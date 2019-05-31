@@ -28,7 +28,6 @@ UniversalDAppUI.prototype.renderInstance = function (contract, address, contract
 // this returns a DOM element
 UniversalDAppUI.prototype.renderInstanceFromABI = function (contractABI, address, contractName) {
   var self = this
-  address = (address.slice(0, 2) === '0x' ? '' : '0x') + address.toString('hex')
   var instance = yo`<div class="instance ${css.instance} ${css.hidesub}" id="instance${address}"></div>`
   var context = self.udapp.context()
 
