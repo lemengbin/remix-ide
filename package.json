@@ -37,12 +37,12 @@
     "npm-link-local": "^1.1.0",
     "npm-run-all": "^4.0.2",
     "onchange": "^3.2.1",
-    "remix-debug": "0.2.14-jsvm2.5.0-2",
-    "remix-analyzer": "0.2.13-jsvm2.5.0-2",
-    "remix-lib": "0.3.13-jsvm2.5.0-2",
-    "remix-solidity": "0.2.14-jsvm2.5.0-2",
-    "remix-tests": "0.0.21-jsvm2.5.0-4",
-    "remixd": "git+https://github.com/ethereum/remixd.git",
+    "remix-debug": "git+https://github.com/lemengbin/remix-debug.git#0.2.14-jsvm2.5.0-2",
+    "remix-analyzer": "git+https://github.com/lemengbin/remix-analyzer.git#0.2.13-jsvm2.5.0-2",
+    "remix-lib": "git+https://github.com/lemengbin/remix-lib.git#0.3.13-jsvm2.5.0-2",
+    "remix-solidity": "git+https://github.com/lemengbin/remix-solidity.git#0.2.14-jsvm2.5.0-2",
+    "remix-tests": "git+https://github.com/lemengbin/remix-tests.git#0.0.21-jsvm2.5.0-4",
+    "remixd": "git+https://github.com/lemengbin/remixd.git",
     "request": "^2.83.0",
     "rimraf": "^2.6.1",
     "selenium-standalone": "^6.0.1",
@@ -53,14 +53,14 @@
     "uglify-js": "^2.8.16",
     "vm-browserify": "0.0.4",
     "watchify": "^3.9.0",
-    "web3": "1.0.0-beta.27",
+    "web3": "git+https://github.com/lemengbin/web3.git#1.0.0-beta.27",
     "webworkify": "^1.2.1",
     "yo-yo": "^1.2.2",
     "yo-yoify": "^3.7.3"
   },
   "dependencies": {
     "http-server": "0.9.0",
-    "remixd": "git+https://github.com/ethereum/remixd.git"
+    "remixd": "git+https://github.com/lemengbin/remixd.git"
   },
   "repository": {
     "type": "git",
