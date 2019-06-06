@@ -397,7 +397,9 @@ UniversalDApp.prototype.runTx = function (args, cb) {
       })
     },
     function runTransaction (fromAddress, value, gasLimit, next) {
-      var tx = { to: args.to, data: args.data.dataHex, useCall: args.useCall, from: fromAddress, value: value, gasLimit: gasLimit }
+      var hexFrom = fromAddress ? base58.UmAddressToHexAddress(fromAddress) : fromAddress;
+      var hexTo = args.to ? base58.UmAddressToHexAddress(args.to) : args.to;
+      var tx = { to: hexTo, data: args.data.dataHex, useCall: args.useCall, from: hexFrom, value: value, gasLimit: gasLimit }
       var payLoad = { funAbi: args.data.funAbi, funArgs: args.data.funArgs, contractBytecode: args.data.contractBytecode, contractName: args.data.contractName, contractABI: args.data.contractABI, linkReferences: args.data.linkReferences }
       var timestamp = Date.now()
 
